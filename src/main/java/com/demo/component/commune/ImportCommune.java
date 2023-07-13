@@ -1,7 +1,7 @@
-package com.example.demo.commune;
+package com.demo.component.commune;
 
 
-import com.example.demo.commune.entity.Commune;
+import com.demo.component.commune.entity.Commune;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;

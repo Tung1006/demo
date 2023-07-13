@@ -1,6 +1,6 @@
-package com.example.demo.commune;
+package com.demo.component.commune;
 
-import com.example.demo.commune.entity.Commune;
+import com.demo.component.commune.entity.Commune;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class CommuneServiceImpl {
+public class CommuneService {
     @Autowired
     private CommuneRepository repository;
 

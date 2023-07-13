@@ -1,7 +1,7 @@
-package com.example.demo.district;
+package com.demo.component.district;
 
-import com.example.demo.common.ResponseBean;
-import com.example.demo.district.entity.District;
+import com.demo.component.district.entity.District;
+import com.demo.common.ResponseBean;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;

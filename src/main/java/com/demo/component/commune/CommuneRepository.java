@@ -1,10 +1,8 @@
-package com.example.demo.commune;
+package com.demo.component.commune;
 
-import com.example.demo.commune.entity.Commune;
-import org.springframework.data.domain.Page;
+import com.demo.component.commune.entity.Commune;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.UUID;
 

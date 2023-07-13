@@ -1,5 +1,7 @@
-package com.example.demo.province.entity;
+package com.demo.component.commune.entity;
 
+import com.demo.component.district.entity.District;
+import com.demo.component.province.entity.Province;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,18 +13,18 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "province")
-public class Province implements Serializable {
+@Table(name = "commune")
+public class Commune implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    //mã tỉnh
+    //mã xã
     @Column(name = "code")
     private String code;
 
-    //tên
+    //tên xã
     @Column(name = "name")
     private String name;
 
@@ -38,7 +40,13 @@ public class Province implements Serializable {
     @Column(name = "number_of_people")
     private Integer numberOfPeople;
 
-//    @OneToMany()
-//    @JoinColumn(name = "id_district")
-//    private Set<District> district;
+    //Huyện
+    @ManyToOne
+    @JoinColumn(name = "id_district")
+    private District district;
+
+    //tỉnh
+    @ManyToOne
+    @JoinColumn(name = "id_province")
+    private Province province;
 }

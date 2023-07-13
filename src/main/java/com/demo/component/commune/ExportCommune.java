@@ -1,6 +1,6 @@
-package com.example.demo.commune;
+package com.demo.component.commune;
 
-import com.example.demo.commune.entity.Commune;
+import com.demo.component.commune.entity.Commune;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;

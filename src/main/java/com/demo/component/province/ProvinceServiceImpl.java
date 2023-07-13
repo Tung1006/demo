@@ -1,6 +1,6 @@
-package com.example.demo.province;
+package com.demo.component.province;
 
-import com.example.demo.province.entity.Province;
+import com.demo.component.province.entity.Province;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

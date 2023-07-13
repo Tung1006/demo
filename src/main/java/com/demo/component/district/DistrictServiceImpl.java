@@ -1,8 +1,6 @@
-package com.example.demo.district;
+package com.demo.component.district;
 
-import com.example.demo.commune.entity.Commune;
-import com.example.demo.district.entity.District;
-import jakarta.servlet.http.HttpServletResponse;
+import com.demo.component.district.entity.District;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

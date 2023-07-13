@@ -1,8 +1,8 @@
-package com.example.demo.district;
+package com.demo.component.province;
 
-//import com.example.demo.District.entity.District;
+//import com.example.demo.Province.entity.Province;
 
-import com.example.demo.district.entity.District;
+import com.demo.component.province.entity.Province;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,19 +15,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.IOException;
 import java.util.List;
 
-public class ExportDistrict {
+public class ExportProvince {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
-    private List<District> listDistrict;
+    private List<Province> listProvince;
 
-    public ExportDistrict(List<District> listDistrict) {
-        this.listDistrict = listDistrict;
+    public ExportProvince(List<Province> listProvince) {
+        this.listProvince = listProvince;
         workbook = new XSSFWorkbook();
     }
 
 
     private void writeHeaderLine() {
-        sheet = workbook.createSheet("District");
+        sheet = workbook.createSheet("Province");
 
         Row row = sheet.createRow(0);
 
@@ -66,15 +66,15 @@ public class ExportDistrict {
         font.setFontHeight(14);
         style.setFont(font);
 
-        for (District District : listDistrict) {
+        for (Province Province : listProvince) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
 
-            createCell(row, columnCount++, District.getId(), style);
-            createCell(row, columnCount++, District.getCode(), style);
-            createCell(row, columnCount++, District.getName(), style);
-            createCell(row, columnCount++, District.getFoundedYear().toString(), style);
-            createCell(row, columnCount++, District.getAcreage(), style);
+            createCell(row, columnCount++, Province.getId(), style);
+            createCell(row, columnCount++, Province.getCode(), style);
+            createCell(row, columnCount++, Province.getName(), style);
+            createCell(row, columnCount++, Province.getFoundedYear().toString(), style);
+            createCell(row, columnCount++, Province.getAcreage(), style);
 
         }
     }

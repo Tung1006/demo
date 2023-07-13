@@ -1,6 +1,6 @@
-package com.example.demo.district;
+package com.demo.component.district;
 
-import com.example.demo.district.entity.District;
+import com.demo.component.district.entity.District;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

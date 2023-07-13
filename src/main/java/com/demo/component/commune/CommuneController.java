@@ -1,12 +1,13 @@
-package com.example.demo.province;
+package com.demo.component.commune;
 
-import com.example.demo.common.ResponseBean;
-import com.example.demo.province.entity.Province;
+import com.demo.component.commune.entity.Commune;
+import com.demo.common.ResponseBean;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,18 +26,21 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@Tag(name = "003 - province")
-@RequestMapping("/testProvince")
-public class ProvinceController {
+@Tag(name = "001 - commune")
+@RequestMapping("/testCommunne")
+public class CommuneController {
     @Autowired
-    private ProvinceServiceImpl service;
+    private CommuneService service;
+
+    @Autowired
+    private CommuneRepository repo;
 
     @GetMapping("/find-all")
     @Operation(summary = "[Hiển thị tất cả--t]")
     public ResponseEntity<?> findAll(Model model) {
         ResponseBean resBean = new ResponseBean();
         resBean.setCode(HttpStatus.OK.toString());
-//        resBean.setMessage(Constants.SUCCESS);
+        resBean.setMessage("SUCCESS");
         resBean.setData(service.findAll());
         return new ResponseEntity<>(resBean, HttpStatus.OK);
     }
@@ -48,8 +52,8 @@ public class ProvinceController {
         ResponseBean resBean = new ResponseBean();
         resBean.setCode(HttpStatus.OK.toString());
         service.delete(id);
-        List<Province> listDistrict = service.findAll();
-        resBean.setData(listDistrict);
+        List<Commune> listCommune = service.findAll();
+        resBean.setData(listCommune);
         return new ResponseEntity<>(resBean, HttpStatus.OK);
     }
 
@@ -63,7 +67,7 @@ public class ProvinceController {
     }
 
     @GetMapping("/findByName")
-    @Operation(summary = "[Tìm kiếm theo tên]")
+    @Operation(summary = "[Tìm kiếm xã]")
     public ResponseEntity<?> findByName(@RequestParam(name = "name") String name) {
         ResponseBean resBean = new ResponseBean();
         resBean.setCode(HttpStatus.OK.toString());
@@ -82,17 +86,16 @@ public class ProvinceController {
 
     @PostMapping("/add")
     @Operation(summary = "[Thêm xã mới]")
-    public ResponseEntity<Object> add(Model model, @RequestBody @Valid Province entity) {
+    public ResponseEntity<Object> add(Model model, @RequestBody @Valid Commune entity) {
         ResponseBean resBean = new ResponseBean();
         resBean.setCode(HttpStatus.OK.toString());
-        service.save(entity);
         resBean.setData(service.save(entity));
         return new ResponseEntity<>(resBean, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
     @Operation(summary = "[Sửa]")
-    public ResponseEntity<Object> update(@RequestParam("id") String id, @RequestBody @Valid Province entity) {
+    public ResponseEntity<Object> update(Model model, @RequestParam("id") String id, @RequestBody @Valid Commune entity) {
         ResponseBean resBean = new ResponseBean();
         resBean.setCode(HttpStatus.OK.toString());
         resBean.setData(service.save(entity));
@@ -108,10 +111,54 @@ public class ProvinceController {
         String headerValue = "attachment; filename=users_" + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
-        List<Province> listProvince = service.findAll();
+        List<Commune> listCommune = service.findAll();
 
-        ExportProvince excelExporter = new ExportProvince(listProvince);
+        ExportCommune excelExporter = new ExportCommune(listCommune);
 
         excelExporter.export(response);
+    }
+
+    @PostMapping("/import/excel")
+    @Operation(summary = "[đọc file excel]")
+    public ResponseEntity<?> importToExcel(HttpServletResponse response) throws IOException {
+//        response.setContentType("application/octet-stream");
+
+        ResponseBean resBean = new ResponseBean();
+        resBean.setCode(HttpStatus.OK.toString());
+//        resBean.setData(service.save(entity));
+//        String headerKey = "Content-Disposition";
+//        String headerValue = "attachment; filename=users_" + ".xlsx";
+//        response.setHeader(headerKey, headerValue);
+        ImportCommune importCommune = new ImportCommune();
+        List<Commune> newFile = importCommune.readExcel("D:\\download\\users_kkkk.xlsx");
+        for (Commune commune : newFile) {
+            resBean.setData(service.save(commune));
+        }
+        return new ResponseEntity<>(resBean, HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    @Operation(summary = "[Đếm số bản ghi]")
+    public ResponseEntity<?> count() {
+        long soLuong = repo.count();
+        ResponseBean resBean = new ResponseBean();
+        resBean.setCode(HttpStatus.OK.toString());
+        resBean.setData(soLuong);
+        return new ResponseEntity<>(resBean, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/trang-chu/page")
+    @Operation(summary = "[phân trang]")
+    public ResponseEntity<?> listTrangChu(@RequestParam("pageNumber") int currentPage,
+                                          @RequestParam("totalItems") int totalItems) {
+        Page<Commune> page = service.pageCommune(currentPage, totalItems);
+        ResponseBean resBean = new ResponseBean();
+        resBean.setCode(HttpStatus.OK.toString());
+        resBean.setData(page);
+//        model.addAttribute("currentPage", currentPage);
+//        model.addAttribute("totalPages", page.getTotalPages());
+//        model.addAttribute("totalItems", page.getTotalElements());
+//        model.addAttribute("listSP", page.getContent());
+        return new ResponseEntity<>(resBean, HttpStatus.OK);
     }
 }
